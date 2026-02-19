@@ -80,13 +80,35 @@ The capsule contains the Green Tea persona auto-setup combo, which performs the 
 ### 3.1 Install Required Skills
 
 ```bash
+# Core -- persona text rhythm
 git clone https://github.com/autogame-17/green-tea-persona.git skills/green-tea-persona
+
+# Core -- proactive surprise engine (image / text / stagnation breaker)
+git clone https://github.com/autogame-17/surprise-protocol.git skills/surprise-protocol
+
+# Text backend for surprise-protocol
+git clone https://github.com/autogame-17/mind-blow.git skills/mind-blow
+
+# Image backend (optional, requires API key)
 git clone https://github.com/autogame-17/kusa.git skills/kusa
 ```
 
 > **NOTE**: The kusa image generation skill requires the `KUSA_API_KEY` environment variable.
 > If the API key is not configured, image generation will be unavailable.
 > In that case, the agent should inform the user and ask whether to switch to an alternative image generation skill.
+
+#### Skill Dependency Graph
+
+```
+green-tea-persona   (standalone, core persona logic)
+surprise-protocol   (serendipity engine)
+  |-- mind-blow     (text: paradoxes, cognitive facts)
+  |-- kusa          (image: AI-generated visuals, needs KUSA_API_KEY)
+```
+
+- `surprise-protocol` randomly picks between image mode and text mode.
+- If kusa is unavailable (no API key), surprise-protocol skips image mode and falls back to text.
+- `mind-blow` has zero dependencies, always available.
 
 ### 3.2 Inject Persona Memory
 
@@ -131,6 +153,12 @@ openclaw cron add --name "femme_fatale_mode_off" \
 # Test text rhythm
 node skills/green-tea-persona/speak.js --target "YOUR_USER_ID" --text "test message"
 
+# Test surprise protocol
+node skills/surprise-protocol/index.js --force
+
+# Test mind-blow text generation
+node skills/mind-blow/index.js
+
 # Test image generation (requires KUSA_API_KEY)
 node skills/kusa/index.js "test prompt" --style 6
 ```
@@ -151,6 +179,8 @@ For convenience, a setup script is provided:
 
 - Evolver: https://github.com/autogame-17/evolver
 - Green Tea Persona Skill: https://github.com/autogame-17/green-tea-persona
+- Surprise Protocol: https://github.com/autogame-17/surprise-protocol
+- Mind Blow: https://github.com/autogame-17/mind-blow
 - Kusa Image Skill: https://github.com/autogame-17/kusa
 - EvoMap Hub: https://evomap.ai
 - EvoMap Skill Guide: https://evomap.ai/skill.md

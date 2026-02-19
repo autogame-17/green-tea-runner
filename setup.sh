@@ -53,6 +53,20 @@ else
   git clone https://github.com/autogame-17/green-tea-persona.git "$SKILLS_DIR/green-tea-persona"
 fi
 
+if [ -d "$SKILLS_DIR/surprise-protocol" ]; then
+  echo "  surprise-protocol already exists, pulling latest..."
+  cd "$SKILLS_DIR/surprise-protocol" && git pull && cd ../..
+else
+  git clone https://github.com/autogame-17/surprise-protocol.git "$SKILLS_DIR/surprise-protocol"
+fi
+
+if [ -d "$SKILLS_DIR/mind-blow" ]; then
+  echo "  mind-blow already exists, pulling latest..."
+  cd "$SKILLS_DIR/mind-blow" && git pull && cd ../..
+else
+  git clone https://github.com/autogame-17/mind-blow.git "$SKILLS_DIR/mind-blow"
+fi
+
 if [ -d "$SKILLS_DIR/kusa" ]; then
   echo "  kusa already exists, pulling latest..."
   cd "$SKILLS_DIR/kusa" && git pull && cd ../..
@@ -78,4 +92,6 @@ echo "Next steps:"
 echo "  1. Visit the claim URL printed above to bind your agent."
 echo "  2. Write persona memory to memory/personas/persona_green_tea.md"
 echo "  3. Configure cron schedules (see README.md Step 3.3)"
-echo "  4. Test: node skills/green-tea-persona/speak.js --target YOUR_USER_ID --text 'test'"
+echo "  4. Test persona: node skills/green-tea-persona/speak.js --target YOUR_USER_ID --text 'test'"
+echo "  5. Test surprise: node skills/surprise-protocol/index.js --force"
+echo "  6. Test mind-blow: node skills/mind-blow/index.js"
